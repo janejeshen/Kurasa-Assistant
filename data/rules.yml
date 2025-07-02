@@ -1,0 +1,6 @@
+version: "3.1"
+rules:
+- rule: Respond with GPT for Kurasa help
+  steps:
+    - intent: ask_kurasa
+    - action: action_ask_gpt

@@ -1,0 +1,12 @@
+version: "3.1"
+
+intents:
+  - greet
+  - ask_kurasa
+
+actions:
+  - action_ask_gpt
+
+responses:
+  utter_greet:
+    - text: "Hi! I'm your Kurasa assistant. How can I help you?"
