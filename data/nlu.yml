@@ -1,13 +1,217 @@
 version: "3.1"
+
 nlu:
+
+# ---------- GREETING ----------
 - intent: greet
   examples: |
     - hello
     - hi
     - hey
+    - good morning
+    - good afternoon
+    - what's up
+    - hey there
+    - howdy
 
+# ---------- ADMIN INTENTS ----------
+- intent: add_classroom
+  examples: |
+    - how do I add a new classroom?
+    - add a class
+    - where do I go to create a class?
+    - I want to add a classroom
+    - can I create a classroom?
+    - show me how to make a new class
+    - what's the process for adding a class?
+    - create a classroom please
+    - help me create a classroom
+
+- intent: assign_class_teacher
+  examples: |
+    - how do I allocate a class teacher?
+    - assign a teacher to a class
+    - where do I add a class teacher?
+    - link teacher to classroom
+    - how to assign teacher to classroom?
+    - I want to set a teacher for this class
+    - add class teacher
+    - allocate teacher to classroom
+    - how do I assign a class teacher?
+
+- intent: delete_classroom
+  examples: |
+    - how do I delete a classroom?
+    - remove a class
+    - delete an existing class
+    - I want to get rid of a classroom
+    - can I remove a class from the system?
+    - show me how to delete a class
+    - erase a classroom from Kurasa
+    - delete classroom
+    - remove class from register
+
+- intent: update_school_settings
+  examples: |
+    - how do I update school settings?
+    - where can I change the logo and school name?
+    - edit term dates and grading system
+    - change attendance settings
+    - update school configuration
+    - change school details
+
+- intent: transfer_student
+  examples: |
+    - how do I transfer a student?
+    - move student to another class
+    - transfer student between classrooms
+    - reassign student to a new class
+    - help me transfer a student
+
+- intent: input_headteacher_comments
+  examples: |
+    - how can I enter the headteacher’s comments?
+    - add termly comments as a headteacher
+    - input comments for end of term
+    - enter headteacher feedback
+    - headteacher term comments
+
+- intent: add_user_role
+  examples: |
+    - how do I add a role to a user?
+    - assign another role to a user
+    - give user new responsibilities
+    - add user permissions
+    - assign extra role to someone
+
+- intent: add_new_user
+  examples: |
+    - how do I invite a new user?
+    - create user with roles
+    - register a new teacher
+    - add someone to the system
+    - create account for a staff member
+
+- intent: remove_user_role
+  examples: |
+    - how do I remove a role from a user?
+    - unassign a role
+    - take away access from someone
+    - revoke user permissions
+    - delete a role from user
+
+- intent: check_schemes
+  examples: |
+    - how do I check schemes?
+    - view my schemes
+    - where are the schemes of work?
+    - see scheme of work
+    - open schemes
+    - check teaching plans
+
+- intent: evaluate_lesson_plan
+  examples: |
+    - how do I evaluate a lesson plan?
+    - review a teacher’s plan
+    - assess lesson planning
+    - evaluate submitted plan
+    - give feedback on lesson plan
+
+# ---------- CLASS TEACHER INTENTS ----------
+- intent: mark_attendance
+  examples: |
+    - how do I mark attendance?
+    - take attendance for my class
+    - fill the attendance register
+    - enter student presence
+    - mark students present
+
+- intent: add_student_to_register
+  examples: |
+    - how do I add a student to the register?
+    - register a new student
+    - add learner to classroom
+    - enroll a student
+    - include student in register
+
+- intent: remove_student
+  examples: |
+    - how do I remove a student?
+    - delete student from register
+    - student is no longer in class
+    - remove learner from system
+    - unassign student from classroom
+
+- intent: generate_reports
+  examples: |
+    - how do I generate reports?
+    - where can I find class reports?
+    - get term report for students
+    - generate student performance report
+    - print class reports
+
+- intent: link_student_guardian
+  examples: |
+    - how do I add a guardian?
+    - link student to parent
+    - assign a guardian
+    - connect student to guardian
+    - register guardian for a learner
+
+- intent: check_attendance
+  examples: |
+    - how do I check attendance?
+    - see today's attendance
+    - class attendance status
+    - view attendance records
+    - open class register
+
+# ---------- SUBJECT TEACHER INTENTS ----------
+- intent: create_lesson_plan
+  examples: |
+    - how do I create a lesson plan?
+    - make a new lesson plan
+    - draft my lessons
+    - create lesson outline
+    - build a lesson plan
+
+- intent: upload_scores
+  examples: |
+    - how do I upload scores?
+    - enter summative test marks
+    - add exam results
+    - upload test marks
+    - input subject scores
+
+- intent: share_scheme
+  examples: |
+    - how do I share a scheme?
+    - send scheme of work
+    - share teaching resources
+    - share my scheme
+    - upload scheme for others
+
+- intent: receive_shared_plan
+  examples: |
+    - how do I view shared lesson plans?
+    - where are received plans?
+    - access shared content
+    - open shared lesson plan
+    - view lesson plan shared by others
+
+- intent: formative_assessment
+  examples: |
+    - how do I perform formative assessments?
+    - assess students
+    - do assessment using rubric
+    - conduct quick assessment
+    - grade students informally
+
+# ---------- GENERIC FALLBACK ----------
 - intent: ask_kurasa
   examples: |
-    - How do I delete a student?
-    - What's the process to add a class teacher?
-    - How can I view reports?
+    - how do I use Kurasa?
+    - I need help with the system
+    - how does this platform work?
+    - what can I do on Kurasa?
+    - explain how to navigate Kurasa

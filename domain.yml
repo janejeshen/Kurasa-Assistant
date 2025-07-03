@@ -2,11 +2,104 @@ version: "3.1"
 
 intents:
   - greet
+  - add_classroom
+  - assign_class_teacher
+  - delete_classroom
+  - update_school_settings
+  - transfer_student
+  - input_headteacher_comments
+  - add_user_role
+  - add_new_user
+  - remove_user_role
+  - check_schemes
+  - evaluate_lesson_plan
+  - mark_attendance
+  - add_student_to_register
+  - remove_student
+  - generate_reports
+  - link_student_guardian
+  - check_attendance
+  - create_lesson_plan
+  - upload_scores
+  - share_scheme
+  - receive_shared_plan
+  - formative_assessment
   - ask_kurasa
+  - nlu_fallback
 
 actions:
   - action_ask_gpt
 
 responses:
   utter_greet:
-    - text: "Hi! I'm your Kurasa assistant. How can I help you?"
+    - text: "Hello! How can I assist you with Kurasa today?"
+
+  utter_add_classroom:
+    - text: "To add a classroom, go to Admin > Classrooms > Add."
+
+  utter_assign_class_teacher:
+    - text: "To assign a class teacher, go to Admin > Classrooms > Choose Class > Add Teacher."
+
+  utter_delete_classroom:
+    - text: "To delete a classroom, go to Admin > Classrooms > Select Class > Delete."
+
+  utter_update_school_settings:
+    - text: "To update settings, go to Admin > Settings > Overview or Preferences tabs."
+
+  utter_transfer_student:
+    - text: "To transfer a student, go to Classrooms > Students tab > Transfer."
+
+  utter_input_headteacher_comments:
+    - text: "To input headteacher comments, go to Admin > Termly Comments."
+
+  utter_add_user_role:
+    - text: "Go to Users > Search for user > Add Roles."
+
+  utter_add_new_user:
+    - text: "Go to Users > Invite new user > Fill details and assign roles."
+
+  utter_remove_user_role:
+    - text: "Go to Users > Search > Uncheck roles to remove them."
+
+  utter_check_schemes:
+    - text: "To view schemes, go to Admin > Schemes > My Schemes."
+
+  utter_evaluate_lesson_plan:
+    - text: "Go to Lesson Plans > Select year/cohort > Review plan."
+
+  utter_mark_attendance:
+    - text: "To mark attendance, go to Class Teacher > Attendance."
+
+  utter_add_student_to_register:
+    - text: "To add a student, go to Class Teacher > Students > Add."
+
+  utter_remove_student:
+    - text: "Click on student name > Delete from profile page."
+
+  utter_generate_reports:
+    - text: "Reports are under Admin > Reports or Class Teacher > Dashboards."
+
+  utter_link_student_guardian:
+    - text: "Go to Admin > Students > Select > Add guardian."
+
+  utter_check_attendance:
+    - text: "Classroom > Attendance > Select date or class."
+
+  utter_create_lesson_plan:
+    - text: "Go to Lesson Planning > Create > Select class/strand."
+
+  utter_upload_scores:
+    - text: "Go to Marks Upload > Select Class > Upload Scores."
+
+  utter_share_scheme:
+    - text: "Go to Schemes > Click > Share with other teachers."
+
+  utter_receive_shared_plan:
+    - text: "Go to Lesson Plans > Received Lesson Plans to view."
+
+  utter_formative_assessment:
+    - text: "Go to Assessments > Choose grade > Mark > Use rubric."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

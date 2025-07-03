@@ -1,13 +1,22 @@
 version: "3.1"
+language: en
+
 pipeline:
-  - name: WhitespaceTokenizer
-  - name: RegexFeaturizer
-  - name: LexicalSyntacticFeaturizer
-  - name: CountVectorsFeaturizer
-  - name: DIETClassifier
-  - name: EntitySynonymMapper
-  - name: ResponseSelector
-  - name: FallbackClassifier
+- name: WhitespaceTokenizer
+- name: RegexFeaturizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+- name: DIETClassifier
+  epochs: 100
+- name: EntitySynonymMapper
+- name: ResponseSelector
+  epochs: 100
+- name: FallbackClassifier
+  threshold: 0.4
+  ambiguity_threshold: 0.1
 
 policies:
-  - name: RulePolicy
+- name: RulePolicy
+  core_fallback_action_name: "action_ask_gpt"
+  core_fallback_threshold: 0.3
+assistant_id: 20250703-182202-simple-outpost

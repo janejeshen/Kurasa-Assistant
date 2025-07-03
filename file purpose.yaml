@@ -1,0 +1,8 @@
+actions/actions.py - Custom Rasa action that loads the .txt file and calls GPT
+domain.yml - Lists intents and the action_ask_gpt
+data/rules.yml - Triggers GPT fallback or intent
+config.yml - Rasa pipeline + fallback threshold
+credentials.yml - Telegram bot token config
+endpoints.yml - Connects to action server
+.env - Stores your OpenAI API key securely
+kurasa_guide.txt - Your knowledge base 

@@ -1,6 +1,134 @@
 version: "3.1"
+
 rules:
-- rule: Respond with GPT for Kurasa help
+
+# ---------- GREETING ----------
+- rule: Respond to greeting
+  steps:
+    - intent: greet
+    - action: utter_greet
+
+# ---------- ADMIN INTENTS ----------
+- rule: Add classroom
+  steps:
+    - intent: add_classroom
+    - action: utter_add_classroom
+
+- rule: Assign class teacher
+  steps:
+    - intent: assign_class_teacher
+    - action: utter_assign_class_teacher
+
+- rule: Delete classroom
+  steps:
+    - intent: delete_classroom
+    - action: utter_delete_classroom
+
+- rule: Update school settings
+  steps:
+    - intent: update_school_settings
+    - action: utter_update_school_settings
+
+- rule: Transfer student
+  steps:
+    - intent: transfer_student
+    - action: utter_transfer_student
+
+- rule: Input headteacher comments
+  steps:
+    - intent: input_headteacher_comments
+    - action: utter_input_headteacher_comments
+
+- rule: Add user role
+  steps:
+    - intent: add_user_role
+    - action: utter_add_user_role
+
+- rule: Add new user
+  steps:
+    - intent: add_new_user
+    - action: utter_add_new_user
+
+- rule: Remove user role
+  steps:
+    - intent: remove_user_role
+    - action: utter_remove_user_role
+
+- rule: Check schemes
+  steps:
+    - intent: check_schemes
+    - action: utter_check_schemes
+
+- rule: Evaluate lesson plan
+  steps:
+    - intent: evaluate_lesson_plan
+    - action: utter_evaluate_lesson_plan
+
+# ---------- CLASS TEACHER INTENTS ----------
+- rule: Mark attendance
+  steps:
+    - intent: mark_attendance
+    - action: utter_mark_attendance
+
+- rule: Add student to register
+  steps:
+    - intent: add_student_to_register
+    - action: utter_add_student_to_register
+
+- rule: Remove student
+  steps:
+    - intent: remove_student
+    - action: utter_remove_student
+
+- rule: Generate reports
+  steps:
+    - intent: generate_reports
+    - action: utter_generate_reports
+
+- rule: Link student to guardian
+  steps:
+    - intent: link_student_guardian
+    - action: utter_link_student_guardian
+
+- rule: Check attendance
+  steps:
+    - intent: check_attendance
+    - action: utter_check_attendance
+
+# ---------- SUBJECT TEACHER INTENTS ----------
+- rule: Create lesson plan
+  steps:
+    - intent: create_lesson_plan
+    - action: utter_create_lesson_plan
+
+- rule: Upload scores
+  steps:
+    - intent: upload_scores
+    - action: utter_upload_scores
+
+- rule: Share scheme
+  steps:
+    - intent: share_scheme
+    - action: utter_share_scheme
+
+- rule: Receive shared plan
+  steps:
+    - intent: receive_shared_plan
+    - action: utter_receive_shared_plan
+
+- rule: Perform formative assessment
+  steps:
+    - intent: formative_assessment
+    - action: utter_formative_assessment
+
+# ---------- GPT-BASED KURASA QUESTIONS ----------
+- rule: Handle general Kurasa questions with GPT
   steps:
     - intent: ask_kurasa
+    - action: action_ask_gpt
+
+# ---------- FALLBACK ----------
+- rule: Fallback to GPT when intent is not clear
+  steps:
+    - intent: nlu_fallback
     - action: action_ask_gpt
