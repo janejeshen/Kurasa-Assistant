@@ -1,109 +1,106 @@
 import os
 import openai
 import hashlib
+import difflib
 from dotenv import load_dotenv
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from openai import OpenAIError
 
-# Loading environment variables from .env file
+# Load .env
 load_dotenv()
 
-# Getting OpenAI API key securely
+# Securely get OpenAI API key
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
     raise ValueError("OPENAI_API_KEY environment variable is not set")
 
-# Initialize redis_client as None by default
+# Initialize Redis client if available
 redis_client = None
-
-# Only try to set up Redis if REDIS_URL is explicitly provided
 if os.getenv("REDIS_URL"):
     try:
         import redis
         from redis.exceptions import RedisError
         redis_url = os.getenv("REDIS_URL")
         redis_client = redis.Redis.from_url(redis_url)
-        redis_client.ping()  # Test the connection
+        redis_client.ping()
         print("✅ Redis cache enabled")
     except (ImportError, RedisError) as e:
         print(f"[WARNING] Redis cache disabled: {e}")
-        redis_client = None
 else:
     print("[INFO] Redis cache disabled (REDIS_URL not set)")
+
 
 class ActionAskGPT(Action):
     def name(self):
         return "action_ask_gpt"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        # Getting the latest message the user sent to the bot
         user_message = tracker.latest_message.get("text")
 
-        # Loading the Kurasa guide file (from environment variable or local fallback)
         guide_path = os.getenv(
             "KURASA_GUIDE_PATH",
             os.path.join(os.path.dirname(__file__), "kurasa_guide.txt")
         )
 
         try:
-            # Reading the guide content
             with open(guide_path, "r", encoding="utf-8") as file:
-                knowledge_base = file.read()
+                guide_content = file.read()
 
-            answer = None
+            # Try to find a matching answer from the guide first
+            answer = self.find_in_guide(user_message, guide_content)
+
+            if answer:
+                print("📘 Answer found in Kurasa guide.")
+                dispatcher.utter_message(text=answer)
+                return []
+
+            # Use hash for cache key
+            cache_key = hashlib.sha256(
+                f"{user_message}|{guide_content}".encode("utf-8")
+            ).hexdigest()
+
+            # Try Redis cache
             if redis_client:
-                try:
-                    # Creating a unique Redis key by hashing the message + guide
-                    cache_key = hashlib.sha256(
-                        f"{user_message}|{knowledge_base}".encode("utf-8")
-                    ).hexdigest()
-                    
-                    # Trying to get cached answer from Redis
-                    cached_response = redis_client.get(cache_key)
-                    if cached_response:
-                        # If cached, decode and use it
-                        answer = cached_response.decode("utf-8")
-                        print("💾 Loaded from Redis cache.")
-                except Exception as e:
-                    print(f"[WARNING] Redis operation failed: {e}")
+                cached_response = redis_client.get(cache_key)
+                if cached_response:
+                    print("💾 Loaded from Redis cache.")
+                    dispatcher.utter_message(text=cached_response.decode("utf-8"))
+                    return []
 
-            if not answer:
-                # If not cached or Redis unavailable, send question to OpenAI
-                response = openai.ChatCompletion.create(
-                    model="gpt-4",  # Using a valid model name
-                    messages=[
-                        {
-                            "role": "system",
-                            "content": (
-                                "You are a Kurasa App Assistant. Only answer based on the guide provided. "
-                                "If unsure, say: 'Sorry, I don't have that information. Please contact support.'"
-                            )
-                        },
-                        {
-                            "role": "user",
-                            "content": f"""
+            # No match, fallback to GPT
+            print("⚠️ Not found in guide. Falling back to GPT.")
+            response = openai.ChatCompletion.create(
+                model="gpt-4",
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            "You are a Kurasa App Assistant. ONLY answer based on the guide provided. "
+                            "If you cannot find the answer, reply: 'Sorry, I don't have that information. Please contact support.'"
+                        )
+                    },
+                    {
+                        "role": "user",
+                        "content": f"""
 Kurasa Guide:
-{knowledge_base}
+{guide_content}
 
 User Question:
 {user_message}
 """
-                        }
-                    ]
-                )
+                    }
+                ]
+            )
+            answer = response.choices[0].message.content
 
-                # Extracting the GPT-generated answer
-                answer = response.choices[0].message.content
+            # Save in Redis
+            if redis_client:
+                try:
+                    redis_client.setex(cache_key, 86400, answer)
+                except Exception as e:
+                    print(f"[WARNING] Redis cache set failed: {e}")
 
-                # Try to store in Redis if available
-                if redis_client:
-                    try:
-                        redis_client.setex(cache_key, 86400, answer)
-                    except Exception as e:
-                        print(f"[WARNING] Redis cache set failed: {e}")
-
-            # Sending the final answer to the user
             dispatcher.utter_message(text=answer)
 
         except FileNotFoundError:
@@ -123,3 +120,25 @@ User Question:
             )
 
         return []
+
+    def find_in_guide(self, query, guide_text):
+        """
+        Tries to find the most relevant answer in the guide based on fuzzy title match.
+        """
+        lines = guide_text.splitlines()
+        titles = [line.strip() for line in lines if line.strip().startswith("### ")]
+
+        matches = difflib.get_close_matches(f"### {query.strip().lower()}", [t.lower() for t in titles], n=1, cutoff=0.5)
+        if not matches:
+            return None
+
+        matched_title = [t for t in titles if t.lower() == matches[0]][0]
+        start_index = lines.index(matched_title)
+        answer_lines = []
+
+        for line in lines[start_index + 1:]:
+            if line.strip().startswith("### "):
+                break
+            answer_lines.append(line)
+
+        return "\n".join([matched_title] + answer_lines).strip()
