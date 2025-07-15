@@ -2,6 +2,8 @@ version: "3.1"
 
 intents:
   - greet
+  - goodbye
+  - thank_you
   - add_classroom
   - assign_class_teacher
   - delete_classroom
@@ -31,74 +33,107 @@ actions:
   - action_ask_gpt
 
 responses:
+
   utter_greet:
-    - text: "Hello! How can I assist you with Kurasa today?"
+    - text: "Hello! How can I help you today?"
+    - text: "Hi there! Need help with anything in Kurasa?"
+    - text: "Hey! How can I assist you with Kurasa today?"
+
+  utter_goodbye:
+    - text: "Goodbye! Feel free to come back if you need anything else."
+    - text: "See you later! Let me know if you need more help."
+
+  utter_you_are_welcome:
+    - text: "You're welcome!"
+    - text: "Anytime! Happy to help."
 
   utter_add_classroom:
     - text: "To add a classroom, go to Admin > Classrooms > Add."
+    - text: "Just head to Admin, open Classrooms, then click Add to create a new class."
 
   utter_assign_class_teacher:
     - text: "To assign a class teacher, go to Admin > Classrooms > Choose Class > Add Teacher."
+    - text: "Pick a class under Admin > Classrooms, then assign a teacher from the right panel."
 
   utter_delete_classroom:
     - text: "To delete a classroom, go to Admin > Classrooms > Select Class > Delete."
+    - text: "Open the Classrooms tab under Admin, pick a class, then hit delete."
 
   utter_update_school_settings:
     - text: "To update settings, go to Admin > Settings > Overview or Preferences tabs."
+    - text: "You can change logo, grading, or attendance rules from Admin > Settings."
 
   utter_transfer_student:
     - text: "To transfer a student, go to Classrooms > Students tab > Transfer."
+    - text: "Use the Transfer option under the Students tab in Classrooms to move them."
 
   utter_input_headteacher_comments:
     - text: "To input headteacher comments, go to Admin > Termly Comments."
+    - text: "Headteacher comments can be added in Admin > Termly Comments section."
 
   utter_add_user_role:
     - text: "Go to Users > Search for user > Add Roles."
+    - text: "You can assign new roles to existing users by searching them in Users tab."
 
   utter_add_new_user:
     - text: "Go to Users > Invite new user > Fill details and assign roles."
+    - text: "Invite new team members through Users > Invite and assign them roles."
 
   utter_remove_user_role:
     - text: "Go to Users > Search > Uncheck roles to remove them."
+    - text: "Unassign roles from a user by editing their profile in the Users tab."
 
   utter_check_schemes:
     - text: "To view schemes, go to Admin > Schemes > My Schemes."
+    - text: "Click on Schemes under Admin to access your teaching plans."
 
   utter_evaluate_lesson_plan:
     - text: "Go to Lesson Plans > Select year/cohort > Review plan."
+    - text: "Lesson plans can be reviewed by selecting them from the Lesson Plans section."
 
   utter_mark_attendance:
     - text: "To mark attendance, go to Class Teacher > Attendance."
+    - text: "Use the Attendance tab under Class Teacher section to fill daily records."
 
   utter_add_student_to_register:
     - text: "To add a student, go to Class Teacher > Students > Add."
+    - text: "Enroll a student by opening the Students tab and clicking Add."
 
   utter_remove_student:
     - text: "Click on student name > Delete from profile page."
+    - text: "Open the student profile and use the Delete button to remove them."
 
   utter_generate_reports:
     - text: "Reports are under Admin > Reports or Class Teacher > Dashboards."
+    - text: "You can generate student or class reports from the Reports section."
 
   utter_link_student_guardian:
     - text: "Go to Admin > Students > Select > Add guardian."
+    - text: "Link a guardian by editing a student profile and filling in the guardian details."
 
   utter_check_attendance:
     - text: "Classroom > Attendance > Select date or class."
+    - text: "View attendance by selecting the classroom and checking records at the top."
 
   utter_create_lesson_plan:
     - text: "Go to Lesson Planning > Create > Select class/strand."
+    - text: "You can build a new lesson plan in the Lesson Planning section."
 
   utter_upload_scores:
     - text: "Go to Marks Upload > Select Class > Upload Scores."
+    - text: "To submit marks, open Marks Upload and fill the scores."
 
   utter_share_scheme:
     - text: "Go to Schemes > Click > Share with other teachers."
+    - text: "Schemes can be shared with others by clicking the three dots > Share."
 
   utter_receive_shared_plan:
     - text: "Go to Lesson Plans > Received Lesson Plans to view."
+    - text: "Shared lesson plans will appear under Received Lesson Plans."
 
   utter_formative_assessment:
     - text: "Go to Assessments > Choose grade > Mark > Use rubric."
+    - text: "Use the Assessments tab to carry out formative grading with rubrics."
 
 session_config:
   session_expiration_time: 60

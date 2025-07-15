@@ -2,13 +2,31 @@ version: "3.1"
 
 rules:
 
-# GREETING 
+# GREETING
 - rule: Respond to greeting
   steps:
     - intent: greet
     - action: utter_greet
 
-# ADMIN INTENTS 
+# GOODBYE
+- rule: Say goodbye
+  steps:
+    - intent: goodbye
+    - action: utter_goodbye
+
+# THANK YOU
+- rule: Say thanks
+  steps:
+    - intent: thank_you
+    - action: utter_you_are_welcome
+
+# ON CONVERSATION START
+- rule: Greet on conversation start
+  conversation_start: true
+  steps:
+    - action: utter_greet
+
+# ADMIN INTENTS
 - rule: Add classroom
   steps:
     - intent: add_classroom
@@ -64,7 +82,7 @@ rules:
     - intent: evaluate_lesson_plan
     - action: utter_evaluate_lesson_plan
 
-# CLASS TEACHER INTENTS 
+# CLASS TEACHER INTENTS
 - rule: Mark attendance
   steps:
     - intent: mark_attendance
@@ -95,7 +113,7 @@ rules:
     - intent: check_attendance
     - action: utter_check_attendance
 
-# SUBJECT TEACHER INTENTS 
+# SUBJECT TEACHER INTENTS
 - rule: Create lesson plan
   steps:
     - intent: create_lesson_plan
@@ -121,13 +139,13 @@ rules:
     - intent: formative_assessment
     - action: utter_formative_assessment
 
-# -GPT-BASED KURASA QUESTIONS 
+# GPT-BASED KURASA QUESTIONS
 - rule: Handle general Kurasa questions with GPT
   steps:
     - intent: ask_kurasa
     - action: action_ask_gpt
 
-#  FALLBACK 
+# FALLBACK
 - rule: Fallback to GPT when intent is not clear
   steps:
     - intent: nlu_fallback

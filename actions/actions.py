@@ -6,16 +6,20 @@ from dotenv import load_dotenv
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from openai import OpenAIError
+from sentence_transformers import SentenceTransformer, util
 
-# Load .env
+# Load environment variables
 load_dotenv()
 
-# Securely get OpenAI API key
+# Set up OpenAI
 openai.api_key = os.getenv("OPENAI_API_KEY")
 if not openai.api_key:
-    raise ValueError("OPENAI_API_KEY environment variable is not set")
+    raise ValueError("OPENAI_API_KEY not found in environment variables.")
 
-# Initialize Redis client if available
+# Set up embedding model
+embedding_model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+
+# Optional Redis caching
 redis_client = None
 if os.getenv("REDIS_URL"):
     try:
@@ -30,13 +34,46 @@ if os.getenv("REDIS_URL"):
 else:
     print("[INFO] Redis cache disabled (REDIS_URL not set)")
 
+# Vague keyword clarifier
+VAGUE_KEYWORD_MAP = {
+    "schemes": [
+        "How to Check for Schemes",
+        "How to Prepare a Scheme of Work",
+        "How to Download a Scheme",
+        "How to Share a Scheme",
+        "How to Receive a Shared Scheme",
+        "How to Clone a Scheme",
+        "How to Delete a Lesson Plan or Scheme"
+    ],
+    "lesson": [
+        "How to Evaluate Lesson Plans",
+        "How to Create a Lesson Plan",
+        "How to View Lesson Plans",
+        "How to Edit Lesson Plan Date/Time",
+        "How to Add Remarks for Past Lessons",
+        "How to Delete a Lesson Plan or Scheme",
+        "How to Download a Lesson Plan",
+        "How to Share a Lesson Plan",
+        "How to Receive Shared Lesson Plan"
+    ],
+    "attendance": [
+        "How to Check Day's Attendance",
+        "How to Mark the Attendance Register"
+    ],
+    "marks": [
+        "How to Mark the Attendance Register",
+        "How to Upload Summative Scores",
+        "How to Check the Summative Marklist"
+    ]
+    # Add more if needed
+}
 
 class ActionAskGPT(Action):
     def name(self):
         return "action_ask_gpt"
 
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: dict):
-        user_message = tracker.latest_message.get("text")
+        user_message = tracker.latest_message.get("text", "").strip()
 
         guide_path = os.getenv(
             "KURASA_GUIDE_PATH",
@@ -45,46 +82,62 @@ class ActionAskGPT(Action):
 
         try:
             with open(guide_path, "r", encoding="utf-8") as file:
-                guide_content = file.read()
+                guide_text = file.read()
 
-            # Try to find a matching answer from the guide first
-            answer = self.find_in_guide(user_message, guide_content)
+            # Store and retrieve previous vague interaction
+            last_topic = tracker.get_slot("last_topic")
+            if last_topic and last_topic in VAGUE_KEYWORD_MAP:
+                options = VAGUE_KEYWORD_MAP[last_topic]
+                matches = difflib.get_close_matches(user_message.strip().lower(), [opt.lower() for opt in options], n=1, cutoff=0.6)
+                if matches:
+                    user_message = matches[0]
+                    dispatcher.utter_message(text=f"Thanks! Here's what I found for: {user_message}")
+                else:
+                    dispatcher.utter_message(text="Thanks for clarifying! Let me check that for you.")
 
+            # 1. Vague Keyword Handling
+            for vague, options in VAGUE_KEYWORD_MAP.items():
+                if vague in user_message.lower():
+                    choices = "\n".join(f"- {opt}" for opt in options)
+                    dispatcher.utter_message(
+                        text=f"Just to clarify, were you asking about one of the following regarding '{vague}'?\n{choices}\nLet me know which one you'd like help with."
+                    )
+                    return [
+                        {"event": "slot", "name": "last_topic", "value": vague}
+                    ]
+
+            # 2. Try direct fuzzy match from guide
+            answer = self.extract_answer_from_guide(user_message, guide_text)
             if answer:
-                print("📘 Answer found in Kurasa guide.")
                 dispatcher.utter_message(text=answer)
                 return []
 
-            # Use hash for cache key
-            cache_key = hashlib.sha256(
-                f"{user_message}|{guide_content}".encode("utf-8")
-            ).hexdigest()
-
-            # Try Redis cache
+            # 3. Check Redis cache
+            cache_key = hashlib.sha256(f"{user_message}|{guide_text}".encode("utf-8")).hexdigest()
             if redis_client:
-                cached_response = redis_client.get(cache_key)
-                if cached_response:
-                    print("💾 Loaded from Redis cache.")
-                    dispatcher.utter_message(text=cached_response.decode("utf-8"))
+                cached = redis_client.get(cache_key)
+                if cached:
+                    dispatcher.utter_message(text=cached.decode("utf-8"))
                     return []
 
-            # No match, fallback to GPT
-            print("⚠️ Not found in guide. Falling back to GPT.")
+            # 4. Fallback to GPT
             response = openai.ChatCompletion.create(
                 model="gpt-4",
                 messages=[
                     {
                         "role": "system",
                         "content": (
-                            "You are a Kurasa App Assistant. ONLY answer based on the guide provided. "
-                            "If you cannot find the answer, reply: 'Sorry, I don't have that information. Please contact support.'"
+                            "You are Kurasa Bot, a friendly and knowledgeable assistant that helps users navigate and use the Kurasa app. "
+                            "Always speak in a warm, clear, and helpful tone. "
+                            "If the question is out of scope, say: 'Sorry, I don't have that information. Please contact support.'"
+                            "Try to sound natural and supportive — like a helpful human assistant would."
                         )
                     },
                     {
                         "role": "user",
                         "content": f"""
 Kurasa Guide:
-{guide_content}
+{guide_text}
 
 User Question:
 {user_message}
@@ -92,43 +145,30 @@ User Question:
                     }
                 ]
             )
-            answer = response.choices[0].message.content
+            gpt_reply = response.choices[0].message.content.strip()
 
-            # Save in Redis
             if redis_client:
                 try:
-                    redis_client.setex(cache_key, 86400, answer)
+                    redis_client.setex(cache_key, 86400, gpt_reply)
                 except Exception as e:
-                    print(f"[WARNING] Redis cache set failed: {e}")
+                    print(f"[WARNING] Redis cache write failed: {e}")
 
-            dispatcher.utter_message(text=answer)
+            dispatcher.utter_message(text=gpt_reply)
 
         except FileNotFoundError:
-            print(f"[ERROR] Guide file not found at: {guide_path}")
-            dispatcher.utter_message(
-                text="Sorry, I couldn't access the knowledge base. Please contact support."
-            )
+            dispatcher.utter_message(text="Sorry, I couldn't access the knowledge base.")
         except OpenAIError as e:
-            print(f"[ERROR] OpenAI API error: {e}")
-            dispatcher.utter_message(
-                text="Sorry, I'm having trouble processing your request. Please try again later."
-            )
+            dispatcher.utter_message(text="I'm having trouble processing that right now.")
         except Exception as e:
-            print(f"[ERROR] Unexpected error: {e}")
-            dispatcher.utter_message(
-                text="Sorry, I couldn't answer that right now. Please try again later or contact support."
-            )
+            dispatcher.utter_message(text="Oops! Something went wrong. Please try again shortly.")
 
         return []
 
-    def find_in_guide(self, query, guide_text):
-        """
-        Tries to find the most relevant answer in the guide based on fuzzy title match.
-        """
+    def extract_answer_from_guide(self, query, guide_text):
         lines = guide_text.splitlines()
         titles = [line.strip() for line in lines if line.strip().startswith("### ")]
 
-        matches = difflib.get_close_matches(f"### {query.strip().lower()}", [t.lower() for t in titles], n=1, cutoff=0.5)
+        matches = difflib.get_close_matches(f"### {query.strip().lower()}", [t.lower() for t in titles], n=1, cutoff=0.6)
         if not matches:
             return None
 
@@ -141,4 +181,4 @@ User Question:
                 break
             answer_lines.append(line)
 
-        return "\n".join([matched_title] + answer_lines).strip()
+        return f"Here's what I found for you:\n{matched_title}\n{''.join(answer_lines).strip()}"
