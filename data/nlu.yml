@@ -117,7 +117,7 @@ nlu:
     - evaluate submitted plan
     - give feedback on lesson plan
 
-# ---------- CLASS TEACHER INTENTS ----------
+#  CLASS TEACHER INTENTS
 - intent: mark_attendance
   examples: |
     - how do I mark attendance?
@@ -166,7 +166,7 @@ nlu:
     - view attendance records
     - open class register
 
-# ---------- SUBJECT TEACHER INTENTS ----------
+# SUBJECT TEACHER INTENTS 
 - intent: create_lesson_plan
   examples: |
     - how do I create a lesson plan?
@@ -207,7 +207,7 @@ nlu:
     - conduct quick assessment
     - grade students informally
 
-# ---------- GENERIC FALLBACK ----------
+#  GENERIC FALLBACK 
 - intent: ask_kurasa
   examples: |
     - how do I use Kurasa?
