@@ -16,7 +16,10 @@ pipeline:
   ambiguity_threshold: 0.1
 
 policies:
-- name: RulePolicy
-  core_fallback_action_name: "action_ask_gpt"
-  core_fallback_threshold: 0.3
-assistant_id: 20250703-182202-simple-outpost
+  - name: RulePolicy
+    core_fallback_action_name: "action_ask_grok"
+    core_fallback_threshold: 0.3
+    enable_fallback_prediction: true
+
+
+assistant_id: 20250722-115217-visible-marsh

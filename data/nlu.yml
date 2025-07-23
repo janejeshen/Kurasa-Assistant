@@ -2,7 +2,7 @@ version: "3.1"
 
 nlu:
 
-#  GREETINGs
+# GREETINGS
 - intent: greet
   examples: |
     - hello
@@ -14,7 +14,7 @@ nlu:
     - hey there
     - howdy
 
-# Goodbye
+# GOODBYE
 - intent: goodbye
   examples: |
     - goodbye
@@ -22,7 +22,7 @@ nlu:
     - see you later
     - talk to you soon
 
-# Thanks
+# THANKS
 - intent: thanks
   examples: |
     - thanks
@@ -30,8 +30,7 @@ nlu:
     - appreciate it
     - that helps
 
-
-# ADMIN INTENTS 
+# ADMIN INTENTS
 - intent: add_classroom
   examples: |
     - how do I add a new classroom?
@@ -134,7 +133,7 @@ nlu:
     - evaluate submitted plan
     - give feedback on lesson plan
 
-#  CLASS TEACHER INTENTS
+# CLASS TEACHER INTENTS
 - intent: mark_attendance
   examples: |
     - how do I mark attendance?
@@ -183,7 +182,7 @@ nlu:
     - view attendance records
     - open class register
 
-# SUBJECT TEACHER INTENTS 
+# SUBJECT TEACHER INTENTS
 - intent: create_lesson_plan
   examples: |
     - how do I create a lesson plan?
@@ -224,7 +223,7 @@ nlu:
     - conduct quick assessment
     - grade students informally
 
-#  GENERIC FALLBACK 
+# FALLBACK / GENERAL HELP
 - intent: ask_kurasa
   examples: |
     - how do I use Kurasa?

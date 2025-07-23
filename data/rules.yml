@@ -17,7 +17,7 @@ rules:
 # THANK YOU
 - rule: Say thanks
   steps:
-    - intent: thank_you
+    - intent: thanks
     - action: utter_you_are_welcome
 
 # ON CONVERSATION START
@@ -139,14 +139,14 @@ rules:
     - intent: formative_assessment
     - action: utter_formative_assessment
 
-# GPT-BASED KURASA QUESTIONS
-- rule: Handle general Kurasa questions with GPT
+# GROK-BASED KURASA QUESTIONS
+- rule: Handle general Kurasa questions with Grok
   steps:
     - intent: ask_kurasa
-    - action: action_ask_gpt
+    - action: action_ask_grok
 
 # FALLBACK
-- rule: Fallback to GPT when intent is not clear
+- rule: Fallback to Grok when intent is not clear
   steps:
     - intent: nlu_fallback
-    - action: action_ask_gpt
+    - action: action_ask_grok
