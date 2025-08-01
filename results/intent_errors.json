@@ -1,0 +1,90 @@
+[
+  {
+    "text": "erase a classroom from Kurasa",
+    "intent": "delete_classroom",
+    "intent_prediction": {
+      "name": "remove_student",
+      "confidence": 0.2199767380952835
+    }
+  },
+  {
+    "text": "how do I add a role to a user?",
+    "intent": "add_user_role",
+    "intent_prediction": {
+      "name": "remove_user_role",
+      "confidence": 0.32462942600250244
+    }
+  },
+  {
+    "text": "register a new teacher",
+    "intent": "add_new_user",
+    "intent_prediction": {
+      "name": "assign_class_teacher",
+      "confidence": 0.09126202017068863
+    }
+  },
+  {
+    "text": "how do I add a student to the register?",
+    "intent": "add_student_to_register",
+    "intent_prediction": {
+      "name": "remove_student",
+      "confidence": 0.14104370772838593
+    }
+  },
+  {
+    "text": "add learner to classroom",
+    "intent": "add_student_to_register",
+    "intent_prediction": {
+      "name": "remove_student",
+      "confidence": 0.20399782061576843
+    }
+  },
+  {
+    "text": "delete student from register",
+    "intent": "remove_student",
+    "intent_prediction": {
+      "name": "delete_classroom",
+      "confidence": 0.2004065364599228
+    }
+  },
+  {
+    "text": "how do I check attendance?",
+    "intent": "check_attendance",
+    "intent_prediction": {
+      "name": "mark_attendance",
+      "confidence": 0.07372500002384186
+    }
+  },
+  {
+    "text": "see today's attendance",
+    "intent": "check_attendance",
+    "intent_prediction": {
+      "name": "add_user_role",
+      "confidence": 0.17202475666999817
+    }
+  },
+  {
+    "text": "class attendance status",
+    "intent": "check_attendance",
+    "intent_prediction": {
+      "name": "thanks",
+      "confidence": 0.21386682987213135
+    }
+  },
+  {
+    "text": "open class register",
+    "intent": "check_attendance",
+    "intent_prediction": {
+      "name": "delete_classroom",
+      "confidence": 0.12285555899143219
+    }
+  },
+  {
+    "text": "how do I create a lesson plan?",
+    "intent": "create_lesson_plan",
+    "intent_prediction": {
+      "name": "evaluate_lesson_plan",
+      "confidence": 0.12040944397449493
+    }
+  }
+]

@@ -7,10 +7,10 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
-# Load .env variables
+# Load environment variables
 load_dotenv()
 
-# Optional Redis cache
+# Optional Redis setup
 redis_client = None
 if os.getenv("REDIS_URL"):
     try:
@@ -38,7 +38,13 @@ class ActionAskGrok(Action):
         last_question = tracker.get_slot("last_question")
         conversation_history = tracker.get_slot("conversation_history") or []
 
-        # Check if response is already in Redis
+        # Optional filter: if clearly unrelated to Kurasa, exit early
+        kurasa_keywords = ["kurasa", "scheme", "lesson", "class", "assessment", "parent", "teacher", "student", "report", "plan"]
+        if not any(kw in user_message.lower() for kw in kurasa_keywords):
+            dispatcher.utter_message(text="I'm here to help with Kurasa-related questions only.")
+            return [SlotSet("last_question", user_message), SlotSet("conversation_history", conversation_history)]
+
+        # Check cache
         cache_key = hashlib.sha256(f"{user_message}|kurasa".encode("utf-8")).hexdigest()
         if redis_client:
             cached = redis_client.get(cache_key)
@@ -48,7 +54,7 @@ class ActionAskGrok(Action):
                 history = conversation_history + [(user_message, answer)]
                 return [SlotSet("last_question", user_message), SlotSet("conversation_history", history)]
 
-        # Try to find from guide
+        # Check guide
         title, guide_response = self.get_guide_section(user_message, guide_text)
         if guide_response:
             paraphrased = self.get_paraphrased_answer(user_message, guide_response)
@@ -58,7 +64,7 @@ class ActionAskGrok(Action):
             history = conversation_history + [(user_message, paraphrased)]
             return [SlotSet("last_question", user_message), SlotSet("conversation_history", history)]
 
-        # Fall back to AI with memory
+        # Fallback: Ask Grok with memory context
         memory_context = "\n".join([f"Q: {q}\nA: {a}" for q, a in conversation_history[-3:]])
         prompt = f"{memory_context}\n\nUser: {user_message}\nKurasa AI, please respond helpfully:"
 
@@ -108,8 +114,12 @@ class ActionAskGrok(Action):
     def ask_grok(self, prompt):
         try:
             token = os.getenv("KURASA_API_TOKEN")
+            strict_system_message = (
+                "You are Kurasa Africa Assistant. Only answer questions about the Kurasa Africa platform, its roles, features, reports, and education workflows.\n"
+                "If the user asks something outside Kurasa’s scope, respond with: \"I'm here to help with Kurasa Africa-related questions only.\"\n\n"
+            )
             payload = {
-                "message": prompt,
+                "message": strict_system_message + prompt,
                 "ai": "grok",
                 "token": token,
                 "max_output_tokens": 1500
@@ -120,4 +130,3 @@ class ActionAskGrok(Action):
         except Exception as e:
             print(f"[Fallback AI error] {e}")
         return "Sorry, I couldn’t get that info."
-
