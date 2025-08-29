@@ -8,27 +8,112 @@ nlu:
     - hello
     - hi
     - hey
-    - good morning
-    - good afternoon
-    - what's up
     - hey there
     - howdy
+    - good morning
+    - good afternoon
+    - good evening
+    - what's up
+    - hiya
+    - yo
+    - habari
+    - mambo
+    - vipi
+    - niaje
+    - sasa
 
-# GOODBYE
 - intent: goodbye
   examples: |
     - goodbye
     - bye
     - see you later
     - talk to you soon
+    - catch you later
+    - bye for now
+    - see ya
+    - that’s all, thanks
+    - nitakuona baadaye
+    - kwa heri
 
-# THANKS
 - intent: thanks
   examples: |
     - thanks
     - thank you
     - appreciate it
     - that helps
+    - cheers
+    - asante
+    - much appreciated
+    - awesome, thanks
+    - thanks a lot
+    - you’re the best
+
+- intent: affirm
+  examples: |
+    - yes
+    - yeah
+    - yup
+    - sure
+    - okay
+    - ok
+    - sounds good
+    - indeed
+    - correct
+    - sawa
+
+- intent: deny
+  examples: |
+    - no
+    - nope
+    - nah
+    - not really
+    - don’t
+    - that’s not right
+    - I don’t think so
+    - siyo
+
+- intent: chitchat
+  examples: |
+    - how are you?
+    - who are you?
+    - what can you do?
+    - tell me about yourself
+    - how’s your day?
+    - are you there?
+    - hii system inafanya nini?
+    - you sound great
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you human?
+    - who made you?
+    - what platform runs you?
+    - are you AI?
+
+- intent: out_of_scope
+  examples: |
+    - book me a flight
+    - what’s the weather tomorrow?
+    - convert 250 usd to kes
+    - order me lunch
+    - tell me a joke
+    - what’s Bitcoin price?
+
+# =========================
+# GENERAL HELP / FALLBACK
+# =========================
+- intent: ask_kurasa
+  examples: |
+    - how do I use Kurasa?
+    - I need help with the system
+    - how does this platform work?
+    - what can I do on Kurasa?
+    - explain how to navigate Kurasa
+    - show me what’s possible here
+    - msaada kutumia Kurasa
+    - naanzia wapi kwenye Kurasa?
+
 
 # ADMIN INTENTS
 - intent: add_classroom
@@ -42,6 +127,8 @@ nlu:
     - what's the process for adding a class?
     - create a classroom please
     - help me create a classroom
+    - ongeza darasa jipya
+    - set up a class called [Grade 6 East](class_name)
 
 - intent: assign_class_teacher
   examples: |
@@ -54,6 +141,7 @@ nlu:
     - add class teacher
     - allocate teacher to classroom
     - how do I assign a class teacher?
+    - weka [Mary Wanjiku](person) kama [class_teacher](role) for [Grade 4 North](class_name)
 
 - intent: delete_classroom
   examples: |
@@ -66,6 +154,7 @@ nlu:
     - erase a classroom from Kurasa
     - delete classroom
     - remove class from register
+    - futa darasa [Grade 2 Blue](class_name)
 
 - intent: update_school_settings
   examples: |
@@ -75,6 +164,9 @@ nlu:
     - change attendance settings
     - update school configuration
     - change school details
+    - where can I change the theme and branding?
+    - modify exam weightings
+    - ni wapi nibadilishe jina la shule?
 
 - intent: transfer_student
   examples: |
@@ -83,6 +175,9 @@ nlu:
     - transfer student between classrooms
     - reassign student to a new class
     - help me transfer a student
+    - shift [John Doe](person) to [Grade 7 West](class_name)
+    - move [Amina](person) from [Grade 5 A](class_name) to [Grade 5 B](class_name)
+    - hamisha mwanafunzi darasa
 
 - intent: input_headteacher_comments
   examples: |
@@ -91,6 +186,8 @@ nlu:
     - input comments for end of term
     - enter headteacher feedback
     - headteacher term comments
+    - where do I add principal remarks?
+    - nitaweka wapi maoni ya mwalimu mkuu?
 
 - intent: add_user_role
   examples: |
@@ -99,6 +196,10 @@ nlu:
     - give user new responsibilities
     - add user permissions
     - assign extra role to someone
+    - grant [admin](role) to [Jane](person)
+    - make [Peter](person) a [subject_teacher](role)
+    - add role [bursar](role) for [Lucy](person)
+    - elevate [Brian](person) to [class_teacher](role)
 
 - intent: add_new_user
   examples: |
@@ -107,6 +208,9 @@ nlu:
     - register a new teacher
     - add someone to the system
     - create account for a staff member
+    - invite [Grace](person) as [teacher](role)
+    - onboard a new staff member
+    - add a new admin user
 
 - intent: remove_user_role
   examples: |
@@ -115,6 +219,8 @@ nlu:
     - take away access from someone
     - revoke user permissions
     - delete a role from user
+    - remove [admin](role) from [Mary](person)
+    - revoke [class_teacher](role) for [John](person)
 
 - intent: check_schemes
   examples: |
@@ -124,6 +230,8 @@ nlu:
     - see scheme of work
     - open schemes
     - check teaching plans
+    - onyesha schemes zangu
+    - find the scheme for [Mathematics](subject)
 
 - intent: evaluate_lesson_plan
   examples: |
@@ -132,6 +240,9 @@ nlu:
     - assess lesson planning
     - evaluate submitted plan
     - give feedback on lesson plan
+    - how do I approve a plan?
+    - score a lesson plan
+    - kagua mpango wa somo
 
 # CLASS TEACHER INTENTS
 - intent: mark_attendance
@@ -141,6 +252,10 @@ nlu:
     - fill the attendance register
     - enter student presence
     - mark students present
+    - where is today’s register?
+    - record absentees
+    - nitik mark attendance ya leo
+    - open the roll call
 
 - intent: add_student_to_register
   examples: |
@@ -149,6 +264,8 @@ nlu:
     - add learner to classroom
     - enroll a student
     - include student in register
+    - add [Samuel](person) to [Grade 3 A](class_name)
+    - ingiza mwanafunzi mpya kwa darasa
 
 - intent: remove_student
   examples: |
@@ -157,6 +274,8 @@ nlu:
     - student is no longer in class
     - remove learner from system
     - unassign student from classroom
+    - withdraw [Ian](person) from [Grade 8](class_name)
+    - toa mwanafunzi
 
 - intent: generate_reports
   examples: |
@@ -165,6 +284,9 @@ nlu:
     - get term report for students
     - generate student performance report
     - print class reports
+    - download end-of-term results
+    - toa ripoti za darasa
+    - export reports to PDF
 
 - intent: link_student_guardian
   examples: |
@@ -173,6 +295,8 @@ nlu:
     - assign a guardian
     - connect student to guardian
     - register guardian for a learner
+    - add [Mrs. Njeri](person) as guardian of [Kevin](person)
+    - link mzazi wa mwanafunzi
 
 - intent: check_attendance
   examples: |
@@ -181,6 +305,9 @@ nlu:
     - class attendance status
     - view attendance records
     - open class register
+    - show attendance for [Grade 2 B](class_name)
+    - niangalie frekwensi ya leo
+
 
 # SUBJECT TEACHER INTENTS
 - intent: create_lesson_plan
@@ -190,6 +317,8 @@ nlu:
     - draft my lessons
     - create lesson outline
     - build a lesson plan
+    - start a plan for [Science](subject)
+    - tengeneza mpango wa somo
 
 - intent: upload_scores
   examples: |
@@ -198,6 +327,9 @@ nlu:
     - add exam results
     - upload test marks
     - input subject scores
+    - import marks from CSV
+    - weka alama za mtihani
+    - upload [Mathematics](subject) scores
 
 - intent: share_scheme
   examples: |
@@ -206,6 +338,8 @@ nlu:
     - share teaching resources
     - share my scheme
     - upload scheme for others
+    - publish my scheme to department
+    - sambaza scheme yangu
 
 - intent: receive_shared_plan
   examples: |
@@ -214,6 +348,8 @@ nlu:
     - access shared content
     - open shared lesson plan
     - view lesson plan shared by others
+    - show plans sent to me
+    - nione mipango iliyonishirikiwa
 
 - intent: formative_assessment
   examples: |
@@ -222,12 +358,52 @@ nlu:
     - do assessment using rubric
     - conduct quick assessment
     - grade students informally
+    - create a rubric-based check
+    - fanya tathmini ya maendeleo
 
-# FALLBACK / GENERAL HELP
-- intent: ask_kurasa
+# ENTITIES / SYNONYMS / LOOKUPS / REGEX
+- synonym: classroom
   examples: |
-    - how do I use Kurasa?
-    - I need help with the system
-    - how does this platform work?
-    - what can I do on Kurasa?
-    - explain how to navigate Kurasa
+    - class
+    - stream
+    - homeroom
+
+- synonym: headteacher
+  examples: |
+    - principal
+    - head teacher
+
+- synonym: class_teacher
+  examples: |
+    - class teacher
+    - homeroom teacher
+
+- lookup: role
+  examples: |
+    - admin
+    - class_teacher
+    - subject_teacher
+    - headteacher
+    - bursar
+    - teacher
+    - examiner
+
+- lookup: subject
+  examples: |
+    - Mathematics
+    - English
+    - Kiswahili
+    - Science
+    - Social Studies
+    - CRE
+    - Agriculture
+
+# Optional regex features (help DIET separate class names and IDs)
+- regex: class_name
+  examples: |
+    - (Grade|Class)\s?[1-8]\s?[A-Z]?
+    - Grade\s?[1-8]\s?(North|South|East|West)
+
+- regex: person
+  examples: |
+    - [A-Z][a-z]+(\s[A-Z][a-z]+)+

@@ -1,0 +1,22 @@
+[
+  {
+    "name": "class_name",
+    "pattern": "(Grade|Class)\\s?[1-8]\\s?[A-Z]?"
+  },
+  {
+    "name": "class_name",
+    "pattern": "Grade\\s?[1-8]\\s?(North|South|East|West)"
+  },
+  {
+    "name": "person",
+    "pattern": "[A-Z][a-z]+(\\s[A-Z][a-z]+)+"
+  },
+  {
+    "name": "role",
+    "pattern": "(\\badmin\\b|\\bclass_teacher\\b|\\bsubject_teacher\\b|\\bheadteacher\\b|\\bbursar\\b|\\bteacher\\b|\\bexaminer\\b)"
+  },
+  {
+    "name": "subject",
+    "pattern": "(\\bMathematics\\b|\\bEnglish\\b|\\bKiswahili\\b|\\bScience\\b|\\bSocial\\ Studies\\b|\\bCRE\\b|\\bAgriculture\\b)"
+  }
+]

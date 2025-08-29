@@ -3,7 +3,12 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - thank_you
+  - thanks
+  - affirm
+  - deny
+  - chitchat
+  - bot_challenge
+  - out_of_scope
   - add_classroom
   - assign_class_teacher
   - delete_classroom
@@ -29,91 +34,11 @@ intents:
   - ask_kurasa
   - nlu_fallback
 
-responses:
-  utter_greet:
-    - text: "Hello! How can I help you today?"
-    - text: "Hi there! Need help with anything in Kurasa?"
-    - text: "Hey! How can I assist you with Kurasa today?"
-
-  utter_goodbye:
-    - text: "Goodbye! Come back anytime if you need help."
-    - text: "See you later! I'm here if you ever need anything else."
-
-  utter_you_are_welcome:
-    - text: "You're welcome!"
-    - text: "Anytime! Glad I could help."
-
-  utter_add_classroom:
-    - text: "To add a classroom, just go to Admin, then Classrooms, and click Add."
-
-  utter_assign_class_teacher:
-    - text: "To assign a class teacher, head to Admin, choose Classrooms, pick a class, and add a teacher."
-
-  utter_delete_classroom:
-    - text: "To delete a classroom, go to Admin, open Classrooms, select the class, and delete it."
-
-  utter_update_school_settings:
-    - text: "To update your school settings, open Admin, then go to Settings and choose Overview or Preferences."
-
-  utter_transfer_student:
-    - text: "To transfer a student, go to Classrooms, open the Students tab, and choose Transfer."
-
-  utter_input_headteacher_comments:
-    - text: "To add headteacher comments, go to Admin and click on Termly Comments."
-
-  utter_add_user_role:
-    - text: "To assign roles, go to Users, search for the person, and add their roles."
-
-  utter_add_new_user:
-    - text: "To invite someone new, go to Users, click Invite new user, fill in the details, and assign roles."
-
-  utter_remove_user_role:
-    - text: "To remove a role, go to Users, search for the user, and uncheck the role you'd like to remove."
-
-  utter_check_schemes:
-    - text: "To view your schemes, go to Admin, then Schemes, and open My Schemes."
-
-  utter_evaluate_lesson_plan:
-    - text: "To review a lesson plan, go to Lesson Plans, select the year or cohort, and review it."
-
-  utter_mark_attendance:
-    - text: "To mark attendance, head over to Class Teacher, then tap on Attendance."
-
-  utter_add_student_to_register:
-    - text: "To add a student, go to Class Teacher, open Students, and click Add."
-
-  utter_remove_student:
-    - text: "Click the student’s name, then delete them from their profile page."
-
-  utter_generate_reports:
-    - text: "You’ll find reports under Admin in the Reports section or in Dashboards under Class Teacher."
-
-  utter_link_student_guardian:
-    - text: "Go to Admin, select Students, choose the student, and add a guardian."
-
-  utter_check_attendance:
-    - text: "To check attendance, go to Classroom, tap Attendance, then select the date or class."
-
-  utter_create_lesson_plan:
-    - text: "To create a lesson plan, open Lesson Planning, click Create, and choose a class or strand."
-
-  utter_upload_scores:
-    - text: "Go to Marks Upload, pick the class, and upload the scores."
-
-  utter_share_scheme:
-    - text: "To share a scheme, go to Schemes, click on one, and choose to share it with other teachers."
-
-  utter_receive_shared_plan:
-    - text: "To see shared plans, go to Lesson Plans and open Received Lesson Plans."
-
-  utter_formative_assessment:
-    - text: "Go to Assessments, choose the grade, start marking, and use the rubric provided."
-
-
-actions:
-  - action_ask_grok
-  - action_default_fallback
-  - action_set_last_topic
+entities:
+  - role
+  - class_name
+  - person
+  - subject
 
 slots:
   last_topic:
@@ -134,6 +59,146 @@ slots:
     mappings:
       - type: custom
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  role:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: role
+
+  class_name:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: class_name
+
+  person:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: person
+
+  subject:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: subject
+
+forms:
+  transfer_student_form:
+    required_slots:
+      - person
+      - class_name
+
+responses:
+  # Basics
+  utter_greet:
+    - text: "Hi there 👋 How can I help you in Kurasa today?"
+    - text: "Hey! Ready to get some school tasks done together?"
+    - text: "Hello 🙂 What would you like to do?"
+
+  utter_goodbye:
+    - text: "Alright, bye for now! Talk to you soon 👋"
+    - text: "See you later! I’m here whenever you need a hand."
+
+  utter_you_are_welcome:
+    - text: "No problem at all 🙌"
+    - text: "Anytime! Glad I could help 😊"
+
+  # Safety-net
+  utter_chitchat:
+    - text: "I’m here to help with Kurasa, but I don’t mind a little chat too 😄 What’s on your mind?"
+    - text: "Haha, good one! Need help with classes, reports, or something else?"
+
+  utter_bot_challenge:
+    - text: "Yep, I’m your Kurasa assistant 🤖 here to guide you."
+
+  utter_affirm:
+    - text: "Awesome 👍 What should we do next?"
+
+  utter_deny:
+    - text: "Got it! Let’s try something else then."
+
+  utter_out_of_scope:
+    - text: "Hmm, that’s not something I can handle yet 🤔 I can help with classrooms, users, attendance, reports, and lesson planning."
+
+  # Admin
+  utter_add_classroom:
+    - text: "Here’s how to add a classroom:\n1) Open Admin, then Classrooms.\n2) Click Add.\n3) Fill in the details and save."
+
+  utter_assign_class_teacher:
+    - text: "Assigning a class teacher:\n1) Go to Admin → Classrooms.\n2) Open the class.\n3) In Class Teacher, click Add and pick the teacher."
+
+  utter_delete_classroom:
+    - text: "To remove a classroom:\n1) Admin → Classrooms.\n2) Select the class.\n3) Click Delete and confirm."
+
+  utter_update_school_settings:
+    - text: "Update school settings:\n1) Admin → Settings.\n2) Overview tab for name/logo.\n3) Preferences tab for grading, summatives, weights, term dates, and attendance."
+
+  utter_transfer_student:
+    - text: "To transfer a student:\n1) Open Classrooms and the Students tab.\n2) Find the learner.\n3) Choose Transfer and pick the new class."
+
+  utter_ask_person:
+    - text: "Which student would you like me to transfer?"
+
+  utter_ask_class_name:
+    - text: "Okay—what class should we move them to?"
+
+  utter_input_headteacher_comments:
+    - text: "Add headteacher comments here:\n1) Admin → Termly Comments.\n2) Pick the term, set role to Headteacher, choose the class.\n3) Enter comments and save."
+
+  utter_add_user_role:
+    - text: "Add a role to a user:\n1) Go to Users and find the person.\n2) Open their profile → Add Roles.\n3) Select the roles and save."
+
+  utter_add_new_user:
+    - text: "Invite a new user:\n1) Users → Invite new user.\n2) Enter their details.\n3) Assign roles and send."
+
+  utter_remove_user_role:
+    - text: "Remove a role:\n1) Users → open the profile.\n2) Untick the role.\n3) Save."
+
+  utter_check_schemes:
+    - text: "Check schemes:\n1) Admin → Schemes → My Schemes.\n2) Pick the year to view."
+
+  utter_evaluate_lesson_plan:
+    - text: "Evaluate a lesson plan:\n1) Open Lesson Plans.\n2) Select year/cohort/subject/week.\n3) Open a plan and review."
+
+  # Class Teacher
+  utter_mark_attendance:
+    - text: "Mark attendance:\n1) Class Teacher → Attendance.\n2) Pick today or a date.\n3) Mark and save."
+
+  utter_add_student_to_register:
+    - text: "Add a student:\n1) Class Teacher → Students.\n2) Click Add.\n3) Fill details and save."
+
+  utter_remove_student:
+    - text: "Remove a student:\n1) Open the learner’s profile.\n2) Click Delete/Withdraw.\n3) Confirm."
+
+  utter_generate_reports:
+    - text: "Reports:\n- Class reports: Admin → Reports.\n- Your class dashboards: Class Teacher → Dashboards."
+
+  utter_link_student_guardian:
+    - text: "Link a guardian:\n1) Admin → Students.\n2) Open the learner.\n3) Add guardian details and save."
+
+  utter_check_attendance:
+    - text: "To view attendance:\n1) Classroom → Attendance.\n2) Pick the class and date."
+
+  # Subject Teacher
+  utter_create_lesson_plan:
+    - text: "Create a lesson plan:\n1) Lesson Planning → Create.\n2) Pick class/subject.\n3) Draft and save 🙂"
+
+  utter_upload_scores:
+    - text: "Upload marks:\n1) Open Marks Upload.\n2) Select the class.\n3) Enter or upload scores and save."
+
+  utter_share_scheme:
+    - text: "Share a scheme:\n1) Open the scheme in Schemes.\n2) Click Share.\n3) Choose recipients."
+
+  utter_receive_shared_plan:
+    - text: "See plans shared with you:\n1) Lesson Plans → Received.\n2) Open the item."
+
+  utter_formative_assessment:
+    - text: "Run a quick formative:\n1) Assessments.\n2) Pick the grade/learning area.\n3) Click Mark and use the rubric 👍"
+
+actions:
+  - action_ask_grok

@@ -6,3 +6,8 @@ credentials.yml - Telegram bot token config
 endpoints.yml - Connects to action server
 .env - Stores your OpenAI API key securely
 kurasa_guide.txt - Your knowledge base 
+
+
+# ngrok http 5005 # For webhook
+# rasa run actions
+# rasa run --enable-api --cors "*" --debug

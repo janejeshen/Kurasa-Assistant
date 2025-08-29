@@ -3,140 +3,229 @@
 ## Admin Roles
 
 ### How to Add a Classroom
-In Kurasa, navigate to the Admin section and open the Classrooms. There, you'll find a button to add a class. Click it and choose the class you want to add.
+Here’s how:
+1. Open Admin, then Classrooms.
+2. Click Add Classroom.
+3. Choose the class details and save.
 
 ### How to Allocate a Class Teacher to their respective classes
-In Kurasa, navigate to the Admin section and open the Classrooms. Choose the specific class you want to assign a class teacher to. On the right side of that class's page, you'll find a Class Teacher section. Click the Add button next to it to assign a class teacher.
+Here’s how:
+1. Go to Admin → Classrooms.
+2. Open the class you want.
+3. In the Class Teacher panel on the right, click Add and select the teacher.
 
 ### How to Remove a Classroom
-In Kurasa, go to the Admin section and open the Classrooms. Select the class you wish to delete. On the right side of the class page, you'll see the class details. Click the delete button to remove the classroom.
+Careful—this can’t be undone.
+1. Go to Admin → Classrooms.
+2. Select the class.
+3. Click Delete and confirm.
 
 ### How to Update the School Settings
-In Kurasa, go to the Admin section and open the Settings. On the Settings page, click the Overview tab to edit the workspace name and update the logo. To edit the grading system, summative settings, assessment weights, term dates, and attendance settings, go to the Preferences tab.
+You can change branding and academic preferences in one place:
+1. Go to Admin → Settings.
+2. Use Overview to update workspace name and logo.
+3. Use Preferences to edit grading, summatives, assessment weights, term dates, and attendance settings.
 
 ### How to Input the Termly Headteacher’s Comments
-In Kurasa, go to the Admin section and select the Termly Comments tab. Then select the desired term, choose Headteacher as the role and pick the class you want to add comments for.
+1. Go to Admin → Termly Comments.
+2. Pick the term, set Role to Headteacher, and choose the class.
+3. Enter and save the comments.
 
 ### How to Transfer Students Across Classrooms
-To transfer a student, go to the “Classrooms” section under the Admin menu. Select the source classroom, click on the “Students” tab, find the student to be transferred, use the ”Transfer” option, select the target classroom and confirm the transfer.
+1. Open Admin → Classrooms and select the source class.
+2. Click the Students tab and find the learner.
+3. Choose Transfer, select the target class, and confirm.
 
 ### How to Add a New Role to an Existing User
-To assign a new role to an existing user, go to ”Users” in the Admin panel. Search for the user using name, email or phone number. Click on Add Roles on their profile, select additional roles from the list, and save changes.
+1. Go to Admin → Users and search by name, email, or phone.
+2. Open the profile and click Add Roles.
+3. Select the new roles and save.
 
 ### How to Add a New User with Roles
-To add a new user, go to the “Users” tab, click “Invite new User”, fill in user info (name, email, phone), and choose appropriate roles.
+1. Go to Users → Invite new user.
+2. Enter name, email/phone.
+3. Assign roles and send the invite.
 
 ### How to Remove a Role from a User
-Go to the “Users” tab, search and open the user’s profile. Uncheck or deselect the role to remove, confirm, and save.
+1. Go to Users and open the person’s profile.
+2. Untick the role you want to remove.
+3. Save changes.
 
 ### How to Check for Schemes
-Go to the “Schemes” under Admin, click on My Schemes, select the year and view your schemes.
+1. Go to Admin → Schemes → My Schemes.
+2. Select the year to view your schemes.
 
 ### How to Evaluate Lesson Plans
-Go to the Kurasa menu > Lesson Plans. Select the year, cohort, subject, and date of the week.
+1. Open Lesson Plans from the Kurasa menu.
+2. Select the year, cohort, subject, and week date.
+3. Open a plan and review.
 
 ### How to Check Day's Attendance
-Go to the Kurasa menu > School Attendance. Choose the class. Attendance details will display at the top.
+1. Open School Attendance from the Kurasa menu.
+2. Choose the class.
+3. The day’s summary appears at the top.
 
 ### How to Add a Summative Test Group
-Go to the Kurasa menu > Tests. Click on Create and enter test group details.
+1. Go to Tests from the Kurasa menu.
+2. Click Create and fill in the test group details.
+3. Save.
 
 ### How to Extend Submission Deadline of a Test Group
-Go to the Kurasa menu > Tests. Find the test group, click Edit, and change the deadline date.
+1. Go to Tests and open the test group.
+2. Click Edit.
+3. Update the deadline and save.
 
 ### How to Set Sub-Learning Areas with Weights
-Go to the Kurasa menu > Tests. On the far right, select Sub-Learning Area, then enter the details with weights.
+1. Go to Tests.
+2. Open the Sub-Learning Area section on the right.
+3. Add the areas and set weights, then save.
 
 ## Class Teacher Roles
 
 ### How to Allocate a Subject to a Teacher
-In Kurasa, go to Class Teacher section, select the class, find the subject, and choose the teacher from the dropdown.
+1. Open the Class Teacher section and select the class.
+2. Find the subject.
+3. Choose the teacher from the dropdown and save.
 
 ### How to Mark the Attendance Register
-In Kurasa, go to Class Teacher > Attendance. Choose the cohort and month, then mark attendance.
+1. Go to Class Teacher → Attendance.
+2. Pick the cohort and month or select today.
+3. Mark students and save.
 
 ### How to Add Students to the Class Register
-Go to Class Teacher section, select class > Students button > Add Student. The student will appear in attendance.
+1. Class Teacher → Students → Add Student.
+2. Enter the learner’s details and save.
+3. The learner appears in attendance automatically.
 
 ### How to Remove a Student from the Class Register
-Go to Class Teacher section > Students > Click student name > Delete button on profile.
+1. Class Teacher → Students.
+2. Open the learner’s profile.
+3. Click Delete/Withdraw and confirm.
 
 ### How to Retrieve Inactive Students
-Go to the classroom > Inactive students > Search by name/admission > Restore selected students.
+1. Open the classroom.
+2. Go to Inactive students.
+3. Search by name or admission, then Restore.
 
 ### How to Generate Reports
-Go to Reports section from Admin (for class reports) or Class Teacher (for student dashboards). Choose report type (e.g. End Term).
+1. For class-level reports: Admin → Reports.
+2. For your own class dashboards: Class Teacher → Dashboards.
+3. Pick the report (e.g., End Term) and generate.
 
 ### How to Link a Student to a Guardian
-Go to Admin > Students > Select year/cohort > Select student > Guardian section > Add name/contact.
+1. Admin → Students → select year/cohort.
+2. Open the learner.
+3. In Guardian section, add name and contact.
 
 ### How to Check Syllabus Coverage
-Go to classroom > Overview > Click View Details on learning area.
+1. Open the classroom.
+2. Go to Overview.
+3. Click View Details on the learning area.
 
 ### How to View Formative Assessment Average
-Class Teacher > Classroom > Scroll to Formative Assessments > Enter period.
+1. Class Teacher → Classroom.
+2. Scroll to Formative Assessments.
+3. Enter the period to view the average.
 
 ### How to Check the Summative Marklist
-Class Teacher > Classroom > Scroll to Summative Assessments > Enter test group.
+1. Class Teacher → Classroom.
+2. Scroll to Summative Assessments.
+3. Enter the test group to view the marklist.
 
 ### How to View Lesson Plans
-Class Teacher > Classroom > Scroll to Lesson Plans > Enter week.
+1. Class Teacher → Classroom.
+2. Scroll to Lesson Plans.
+3. Select the week to view plans.
 
 ### How to Update Classroom Preferences
-Class Teacher > Classroom > Scroll to Preferences > Click Edit and update.
+1. Class Teacher → Classroom.
+2. Open Preferences.
+3. Click Edit, make changes, and save.
 
 ### How to Add Resources to a Classroom
-Class Teacher > Classroom > Scroll to Resources > Click Add.
+1. Class Teacher → Classroom.
+2. Scroll to Resources.
+3. Click Add and upload or link the resource.
 
 ### How to Assess for IEPs (Special Needs)
-Class Teacher > Classroom > Students > Select student > Scroll to IEP > Click to assess.
+1. Class Teacher → Classroom → Students.
+2. Open the learner.
+3. Find the IEP section and start an assessment.
 
 ## Subject Teacher Roles
 
 ### How to Create a Lesson Plan
-Login as Teacher > Lesson Planning > Create Plan > Select class/strand > Fill all fields > Save.
+1. Log in as Teacher.
+2. Lesson Planning → Create Plan.
+3. Select class/strand, fill all fields, and save.
 
 ### How to Edit Lesson Plan Date/Time
-Navigate to Lesson Plans > Scroll to Substrand Details > Click Edit and update.
+1. Open Lesson Plans.
+2. Find Sub-strand Details.
+3. Click Edit and update date/time.
 
 ### How to Add Remarks for Past Lessons
-Go to Completed Lessons > Scroll to Remarks > Add reflection > Save.
+1. Go to Completed Lessons.
+2. Open the lesson.
+3. Add a reflection under Remarks and save.
 
 ### How to Delete a Lesson Plan or Scheme
-Lesson Plans > My Lesson Plans > Locate and Delete > Confirm.
+1. Lesson Plans → My Lesson Plans.
+2. Locate the item.
+3. Click Delete and confirm.
 
 ### How to Download a Lesson Plan
-My Plans > Select lesson > View > Click Download icon.
+1. My Plans → select the lesson.
+2. Click View.
+3. Use the Download icon.
 
 ### How to Prepare a Scheme of Work
-Kurasa Menu > Schemes > Click New Scheme > Enter details.
+1. Kurasa Menu → Schemes.
+2. Click New Scheme.
+3. Enter details and save.
 
 ### How to Download a Scheme
-Schemes > Locate > Click arrow > Three dots > View file > Download.
+1. Open Schemes and locate the item.
+2. Click the arrow → three dots → View file.
+3. Download the file.
 
 ### How to Share a Scheme
-Schemes > Locate > Click arrow > Three dots > Share Scheme > Select teacher.
+1. Open Schemes and pick the scheme.
+2. Click the arrow → three dots → Share Scheme.
+3. Select the teacher(s) and share.
 
 ### How to Receive a Shared Scheme
-Schemes > Received Schemes > View shared items.
+1. Go to Schemes → Received Schemes.
+2. Open the shared items.
 
 ### How to Clone a Scheme
-Schemes > Click arrow > Three dots > Clone Scheme > Enter new details.
+1. Schemes → arrow → three dots → Clone Scheme.
+2. Enter the new details and save.
 
 ### How to Upload Summative Scores
-Marks Upload > Select class > Upload Marks > Enter scores.
+1. Open Marks Upload.
+2. Select the class.
+3. Enter or upload scores and save.
 
 ### How to Share a Lesson Plan
-Teacher Section > Lesson Plans > All Lesson Plans > Three dots > Share.
+1. Teacher Section → Lesson Plans → All Lesson Plans.
+2. Open the plan.
+3. Click the three dots → Share and pick recipients.
 
 ### How to Receive Shared Lesson Plan
-Teacher Section > Lesson Plans > Received Lesson Plans.
+1. Teacher Section → Lesson Plans → Received Lesson Plans.
+2. Open the item to view.
 
 ### How to Perform Formative Assessments
-Teacher Section > Assessments > Select grade/learning area > Click Mark > Assess students.
+1. Teacher Section → Assessments.
+2. Select grade/learning area.
+3. Click Mark and assess students with the rubric.
 
 ### How to Perform Formative for Individual Learner
-Assessments > Click Mark on learning area > Fill details > Load assessment > Use rubric.
+1. Assessments → click Mark on the learning area.
+2. Fill the details and load the assessment.
+3. Use the rubric for that learner.
 
 ### How to View Formative Assessment Details
-Assessments > Select grade/learning area > Click View Details.
+1. Assessments → select grade/learning area.
+2. Click View Details to see breakdowns.

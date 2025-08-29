@@ -2,29 +2,52 @@ version: "3.1"
 
 rules:
 
-# GREETING
+# CONVERSATION START 
+- rule: Greet on conversation start
+  conversation_start: true
+  steps:
+    - action: utter_greet
+
 - rule: Respond to greeting
   steps:
     - intent: greet
     - action: utter_greet
 
-# GOODBYE
 - rule: Say goodbye
   steps:
     - intent: goodbye
     - action: utter_goodbye
 
-# THANK YOU
 - rule: Say thanks
   steps:
     - intent: thanks
     - action: utter_you_are_welcome
 
-# ON CONVERSATION START
-- rule: Greet on conversation start
-  conversation_start: true
+# SAFETY-NET INTENTS
+- rule: Handle chitchat
   steps:
-    - action: utter_greet
+    - intent: chitchat
+    - action: utter_chitchat
+
+- rule: Handle bot challenge
+  steps:
+    - intent: bot_challenge
+    - action: utter_bot_challenge
+
+- rule: Handle affirm
+  steps:
+    - intent: affirm
+    - action: utter_affirm
+
+- rule: Handle deny
+  steps:
+    - intent: deny
+    - action: utter_deny
+
+- rule: Handle out of scope
+  steps:
+    - intent: out_of_scope
+    - action: utter_out_of_scope
 
 # ADMIN INTENTS
 - rule: Add classroom
@@ -139,14 +162,23 @@ rules:
     - intent: formative_assessment
     - action: utter_formative_assessment
 
-# GROK-BASED KURASA QUESTIONS
+# KURASA HELP (Grok-backed)
 - rule: Handle general Kurasa questions with Grok
   steps:
     - intent: ask_kurasa
     - action: action_ask_grok
 
-# FALLBACK
+# FALLBACKS
+# Tier 1: explicit out_of_scope handled above by utter_out_of_scope
+
+# Tier 2: low-confidence NLU fallback goes to Grok for smart answer
 - rule: Fallback to Grok when intent is not clear
   steps:
     - intent: nlu_fallback
+    - action: action_ask_grok
+
+# using RulePolicy's action_default_fallback, map it to Grok too.
+- rule: Core default fallback to Grok
+  steps:
+    - action: action_default_fallback
     - action: action_ask_grok

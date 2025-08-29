@@ -2,18 +2,56 @@ version: "3.1"
 language: en
 
 pipeline:
-- name: WhitespaceTokenizer
-- name: RegexFeaturizer
-- name: LexicalSyntacticFeaturizer
-- name: CountVectorsFeaturizer
-- name: DIETClassifier
-  epochs: 100
-- name: EntitySynonymMapper
-- name: ResponseSelector
-  epochs: 100
-- name: FallbackClassifier
-  threshold: 0.4
-  ambiguity_threshold: 0.1
+  # Tokenization & Regex 
+  - name: WhitespaceTokenizer
+    case_sensitive: false
+
+  - name: RegexFeaturizer
+    case_sensitive: false
+    use_word_boundaries: true
+
+  - name: RegexEntityExtractor
+    use_lookup_tables: true
+    use_regexes: true
+    use_word_boundaries: true
+
+  # Pretrained transformer embeddings
+  - name: LanguageModelFeaturizer
+    model_name: "distilbert"
+    model_weights: "distilbert-base-uncased"
+    cache_dir: null
+
+  # Lexical features 
+  - name: LexicalSyntacticFeaturizer
+
+  # Bag-of-words word ngrams
+  - name: CountVectorsFeaturizer
+    OOV_token: "[OOV]"
+    min_ngram: 1
+    max_ngram: 2
+    analyzer: word
+
+  # Character ngrams for typos / code-mix
+  - name: CountVectorsFeaturizer
+    analyzer: char_wb
+    min_ngram: 3
+    max_ngram: 5
+
+  # Intent & entity classifier 
+  - name: DIETClassifier
+    epochs: 200
+    constrain_similarities: true
+    entity_recognition: true
+    model_confidence: softmax
+    learning_rate: 0.001
+    dropout: 0.2
+
+  - name: EntitySynonymMapper
+
+  # Fallback if confidence too low / ambiguous
+  - name: FallbackClassifier
+    threshold: 0.4
+    ambiguity_threshold: 0.1
 
 policies:
   - name: RulePolicy
@@ -21,5 +59,8 @@ policies:
     core_fallback_threshold: 0.3
     enable_fallback_prediction: true
 
+  - name: UnexpecTEDIntentPolicy
+    max_history: 5
+    epochs: 100
 
 assistant_id: 20250722-115217-visible-marsh
